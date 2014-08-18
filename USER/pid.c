@@ -3,8 +3,8 @@
 static PID sPID;
 static PID*sptr = &sPID;
 int8_t iError_1;               //当前误差
-
-
+extern uint8_t Lost_right;
+extern uint8_t Lost_left;
 void PID_Init(void)
 {
   sptr->LastError  = 0;         
@@ -22,50 +22,65 @@ void PID_Init(void)
 	sptr->View_Midline   = 64;                  
 }	
 
-int PID_Calc(uint8_t pid_flag, int NextPoint, uint8_t Track_Midline)
+double PID_Calc(uint8_t pid_flag, int NextPoint, uint8_t Track_Midline)
 { 
   int iError,A,B;                 //当前误差
 	int iIncpid;                //增量值
 	double iIncpid_1;              //增量值
-	int8_t slope;
 	if(pid_flag==0)
 	{
-	 iError = sptr->SetPoint - NextPoint;
-		A = iError;
-	 printf("iError = %d\n",A);
-		if(abs(iError) > 20)
+		if((Lost_right == 1) || (Lost_left == 1) )
 		{
-		  iIncpid = sptr->Proportion * iError + sptr->Integral * sptr->LastError;
+		 if(Lost_right)
+		 {
+		   Lost_right = 0;
+			 iIncpid = -500;
+		 }
+		 else 
+		 {
+		  Lost_left = 0;
+			iIncpid = 751;
+		 }
 		}
-		else
-		{
-		  iIncpid = sptr->Proportion * iError + sptr->Integral * sptr->LastError + sptr->Derivative * sptr->PrevError; 
-		}
-	 
-	 B = iIncpid; 
-	 printf("iIncpid = %d\n",B);
-	 sptr->PrevError = sptr->LastError;
-	 sptr->LastError = iError;
+	 else
+	 {
+	 	 iError = sptr->SetPoint - NextPoint;
+		 A = iError;
+//	   printf("iError = %d\n",A);
+		 if(abs(iError) > 20)
+		 {
+		   iIncpid = sptr->Proportion * iError + sptr->Integral * sptr->LastError;
+		 }
+		 else
+		 {
+		   iIncpid = sptr->Proportion * iError + sptr->Integral * sptr->LastError + sptr->Derivative * sptr->PrevError; 
+		 }
+	   B = iIncpid; 
+//	   printf("iIncpid = %d\n",B);
+	   sptr->PrevError = sptr->LastError;
+	   sptr->LastError = iError;
+	 }
 	 return (iIncpid);
 	}
 	else
 	{
 	 iError_1 = Track_Midline - sptr->View_Midline;
-	 sptr->SetPoint += (5* iError_1* iError_1);	
-	 slope = (iError_1 - sptr->LastError);///0.05;
-		B = slope;
-		printf("slope = %d\n",B);
-		if(slope >=0)
+	 sptr->SetPoint = 310 - (2* iError_1* iError_1);	
+	 if(sptr->SetPoint < 150)
+	 {
+     sptr->SetPoint  = 150;	
+	 }
+//		printf("iError_1 = %d\n",iError_1);
+//		printf("LastError = %d\n",sptr->LastError_1);
+		if(iError_1 >=0)
 		{
-		 sptr->Proportion_1 = slope*slope + 5 * slope + 3;
+		 sptr->Proportion_1 = 0.5 * iError_1*iError_1  ;
 		}
 		else
 		{
-		 sptr->Proportion_1 = slope*slope - 5 * slope + 3;
+		 sptr->Proportion_1 = 0.5 * iError_1*iError_1  ;
 		}
-	
-   
-   iIncpid_1 = sptr->Proportion_1 * iError_1 + sptr->Derivative * sptr->LastError;		
+   iIncpid_1 = sptr->Proportion_1 * iError_1 + sptr->Derivative_1 * sptr->LastError_1;		
 	 sptr->LastError_1 = iError_1;
 	 return (iIncpid_1);
 	}

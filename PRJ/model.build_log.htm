@@ -3,17 +3,96 @@
 <pre>
 <h1>礦ision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\冉岩昊\Documents\GitHub\car_without-ucosii\PRJ\model.uvproj
-Project File Date:  08/09/2014
+I:\日常练习\江西省汽车赛\练习\car_without-ucosii\PRJ\model.uvproj
+Project File Date:  08/10/2014
 
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling main.c...
-main.c: Error: command-line:  #564: cannot open embedded assembler output file "C:\Users\冉岩昊\AppData\Local\Temp\p768-2": No such file or directory
-..\USER\main.c: 0 warnings, 1 error
-".\model.axf" - 1 Error(s), 0 Warning(s).
-Target not created
-</pre>
-</body>
-</html>
- created
+compiling ccd.c...
+..\USER\ccd.c(166): warning:  #550-D: variable "A" was set but never used
+          uint8_t Left_Side,Right_Side,Track_Midline_value,A,B;
+..\USER\ccd.c(166): warning:  #550-D: variable "B" was set but never used
+          uint8_t Left_Side,Right_Side,Track_Midline_value,A,B;
+..\USER\ccd.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=36992 RO-data=5160 RW-data=232 ZI-data=7368  
+FromELF: creating hex file...
+".\model.axf" - 0 Error(s), 2 Warning(s).
+550-D: variable "A" was set but never used
+          uint8_t Left_Side,Right_Side,Track_Midline_value,A,B;
+..\USER\ccd.c(166): warning:  #550-D: variable "B" was set but never used
+          uint8_t Left_Side,Right_Side,Track_Midline_value,A,B;
+..\USER\ccd.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=37020 RO-data=5164 RW-data=232 ZI-data=7368  
+FromELF: creating hex file...
+".\model.axf" - 0 Error(s), 5 Warning(s).
+Load "I:\\日常练习\\江西省汽车赛\\练习\\car_without-ucosii\\PRJ\\model.axf" 
+Set JLink Project File to "I:\日常练习\江西省汽车赛\练习\car_without-ucosii\PRJ\JLinkSettings.ini"
+* JLink Info: Device "MK60DN512XXX10" selected (512 KB flash, 128 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.80g, compiled Feb 13 2014 20:50:02
+Firmware: J-Link ARM V8 compiled Nov 25 2013 19:20:08
+Hardware: V8.00
+S/N : 99999994 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found SWD-DP with ID 0x2BA01477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: ETB present.
+* JLink Info: CSTF present.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: MK60DN512xxx10
+VTarget = 3.306V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Hz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+ication running ...
+1477
+* JLink Info: Found Cortex-M4 r0p1, Little endian.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info: ETB present.
+* JLink Info: CSTF present.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: MK60DN512xxx10
+VTarget = 3.293V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 0, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...

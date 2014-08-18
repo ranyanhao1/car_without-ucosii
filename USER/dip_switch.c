@@ -17,10 +17,6 @@ uint32_t Speed_Set(void)
 	switch_state = dip_state();
 	state = (switch_state & 0x0000f000)>>12;
   speed = 31*state + 310;    //最小速度1m/s,拨码每刻度增加0.1m/s  310
-	if(speed < 50)
-	{
-    speed  = 50;	
-	}
 	return (speed);
 }
 
