@@ -1,9 +1,11 @@
 #include "BSP.h"
 #include "includes.h"
-
+extern uint8_t CCD_filtering_data[128];
 uint32_t number;
+int PWM_Duty;
 void BSP_Init(void)
 {
+	DelayInit();
   OLED_pin_Config();
 	LCD_Init();
 	GPIO_Config();
@@ -51,14 +53,11 @@ void PWM_Config(void)
 	GPIO_QuickInit(HW_GPIOC,2,kGPIO_Mode_OPP);
 	GPIO_WriteBit(HW_GPIOC, 2, 0);
 	
-	
   FTM_PWM_QuickInit(FTM1_CH0_PA08,kPWM_EdgeAligned,50);  //舵机周期20ms
 	FTM_PWM_ChangeDuty(HW_FTM1,HW_FTM_CH0,750);
 	
-	
-	FTM_PWM_QuickInit(FTM0_CH0_PC01,kPWM_EdgeAligned,3000);//电机周期需要实验验证平滑性
-	FTM_PWM_ChangeDuty(HW_FTM0,HW_FTM_CH0,1500);
-	
+//	FTM_PWM_QuickInit(FTM0_CH0_PC01,kPWM_EdgeAligned,3000);//电机周期需要实验验证平滑性
+//	FTM_PWM_ChangeDuty(HW_FTM0,HW_FTM_CH0,1500);
 }
 
 void PIT_Config(void)  
@@ -87,11 +86,18 @@ void OLED_pin_Config(void)
 	GPIO_QuickInit(HW_GPIOD,9,kGPIO_Mode_OPP);
 }
 
-float Voltage_Show(void)
+void Voltage_Show(void)
 {
 	float Voltage; 
   Voltage = ((ADC_QuickReadValue(ADC1_SE6_PE2))/(1000.00))*(5300.00); 
-	return (Voltage);
+	if(Voltage > 7.00)
+	{
+	  LCD_Print(1,2,"Voltage is ok");
+	}
+	else
+	{
+	  LCD_Print(1,2,"Voltage is LOW");
+	}
 }
 
 void Delay_stick(uint8_t times)
@@ -105,34 +111,38 @@ void Delay_stick(uint8_t times)
 
 uint8_t CCD_TASK(void)
 {
+	uint8_t i;
   CCD_gather();
-  CCD_Filtering();	
-  Data_binarization(averaging());		
-	return(TrackMidline());
+ // CCD_Filtering();	
+ // Data_binarization(averaging());		
+	//return (0);
+	//return(TrackMidline());
 }
 
 void DIR_TASK(uint8_t Track_Midline_value)
 {
 	double iIncpid_1; 
-  iIncpid_1 = PID_Calc(1, 0, Track_Midline_value);
+  iIncpid_1 = PID_Calc(1, 0, Track_Midline_value);	
 	FTM_PWM_ChangeDuty(HW_FTM1,HW_FTM_CH0,Servo_pwm(iIncpid_1));
 }
 
 void SCU_TASK(uint32_t speed)
 {
-	int PWM_Duty;
   PWM_Duty += PID_Calc(0, speed, 0);
 	if(PWM_Duty >= 1000)
 	{
 	  FTM_PWM_ChangeDuty(HW_FTM0,HW_FTM_CH0,1000);  /* 0-10000 对应 0-100%占空比 */
+	//	printf("PWM_Duty = %d\n",PWM_Duty);
 	}
 	if(PWM_Duty > 0 && PWM_Duty < 1000)
 	{
 		FTM_PWM_ChangeDuty(HW_FTM0,HW_FTM_CH0,PWM_Duty);  /* 0-10000 对应 0-100%占空比 */
+	//	printf("PWM_Duty = %d\n",PWM_Duty);
 	}
 	if (PWM_Duty <= 0)
 	{
 	 FTM_PWM_ChangeDuty(HW_FTM0,HW_FTM_CH0,0);  /* 0-10000 对应 0-100%占空比 */
+//		printf("PWM_Duty = %d\n",0);
 	}
 }
 

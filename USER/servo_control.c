@@ -14,15 +14,28 @@ double Servo_Angle(double Location_corner)
 
 float Servo_pwm(double servo_corner)
 {
-	double Servo_pwm_duty;
+	double Servo_pwm_duty,A;
 	if(servo_corner != 0)
 	{
 	  Servo_pwm_duty = 750 - servo_corner;
+			if(Servo_pwm_duty >= 1083 )
+	    {
+	      Servo_pwm_duty = 1083 ;
+	    }
+	    else if(Servo_pwm_duty < 0)
+	    {
+	     Servo_pwm_duty = 1 ;
+	    }
+      else
+	    {
+	     Servo_pwm_duty = Servo_pwm_duty;
+	    }	
 	}
 	else
 	{
 	  Servo_pwm_duty = 750;
 	}
-
+  A = Servo_pwm_duty;
+	printf("Servo_pwm_duty = %f",A);
  return (Servo_pwm_duty);
 }	

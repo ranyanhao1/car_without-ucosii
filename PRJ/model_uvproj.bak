@@ -391,14 +391,14 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>MK60D10.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Libraries\startup\DeviceSupport\MK60D10.h</FilePath>
-            </File>
-            <File>
               <FileName>startup_MK60D10.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\Libraries\startup\DeviceSupport\MDK-ARM\startup_MK60D10.s</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK60D10.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libraries\startup\DeviceSupport\system_MK60D10.c</FilePath>
             </File>
           </Files>
         </Group>

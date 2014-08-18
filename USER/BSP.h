@@ -8,7 +8,7 @@ void UART_Config(void);
 void ADC_Config(void);
 void PWM_Config(void);
 void OLED_pin_Config(void);
-float Voltage_Show(void);
+void Voltage_Show(void);
 
 
 void PIT_Config(void);
