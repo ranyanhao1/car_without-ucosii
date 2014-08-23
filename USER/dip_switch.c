@@ -1,8 +1,5 @@
 #include "dip_switch.h"
 
-
-extern int iError_1;
-
 uint32_t dip_state(void)
 {
   return (PTC->PDIR);
@@ -11,9 +8,9 @@ uint32_t dip_state(void)
 
 uint32_t Speed_Set(void)
 {
-	uint32_t state;
-	uint32_t speed;
-	uint32_t switch_state;
+	uint32_t state = 0;
+	uint32_t speed = 0;
+	uint32_t switch_state = 0;
 	switch_state = dip_state();
 	state = (switch_state & 0x0000f000)>>12;
   speed = 31*state + 310;    //最小速度1m/s,拨码每刻度增加0.1m/s  310
@@ -22,9 +19,9 @@ uint32_t Speed_Set(void)
 
 uint32_t Install_angle_change(void)
 {
-  uint32_t state;
-	uint32_t Angle;
-	uint32_t switch_state;
+  uint32_t state = 0;
+	uint32_t Angle = 0;
+	uint32_t switch_state = 0;
 	switch_state = dip_state();
 	state = (switch_state & 0x000f0000)>>16;
 	if(state > 7)

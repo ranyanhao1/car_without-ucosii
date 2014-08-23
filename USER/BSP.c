@@ -1,8 +1,8 @@
 #include "BSP.h"
 #include "includes.h"
-extern uint8_t CCD_filtering_data[128];
 uint32_t number;
 int PWM_Duty;
+
 void BSP_Init(void)
 {
 	DelayInit();
@@ -88,7 +88,7 @@ void OLED_pin_Config(void)
 
 void Voltage_Show(void)
 {
-	float Voltage; 
+	float Voltage = 0; 
   Voltage = ((ADC_QuickReadValue(ADC1_SE6_PE2))/(1000.00))*(5300.00); 
 	if(Voltage > 7.00)
 	{
@@ -111,17 +111,16 @@ void Delay_stick(uint8_t times)
 
 uint8_t CCD_TASK(void)
 {
-	uint8_t i;
   CCD_gather();
  // CCD_Filtering();	
  // Data_binarization(averaging());		
-	//return (0);
+	return (0);
 	//return(TrackMidline());
 }
 
 void DIR_TASK(uint8_t Track_Midline_value)
 {
-	double iIncpid_1; 
+	double iIncpid_1 = 0; 
   iIncpid_1 = PID_Calc(1, 0, Track_Midline_value);	
 	FTM_PWM_ChangeDuty(HW_FTM1,HW_FTM_CH0,Servo_pwm(iIncpid_1));
 }

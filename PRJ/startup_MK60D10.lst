@@ -1148,10 +1148,9 @@ ARM Macro Assembler    Page 18
               00000400 
               00000000 
 Command Line: --debug --xref --cpu=Cortex-M4 --apcs=interwork --depend=.\startu
-p_mk60d10.d -o.\startup_mk60d10.o -ID:\Keil_v5\ARM\RV31\INC -ID:\Keil_v5\ARM\PA
-CK\ARM\CMSIS\4.1.1\CMSIS\Include -ID:\Keil_v5\ARM\Inc\Freescale\Kinetis --list=
-.\startup_mk60d10.lst ..\Libraries\startup\DeviceSupport\MDK-ARM\startup_MK60D1
-0.s
+p_MK60D10.d -o.\startup_MK60D10.o -IC:\Keil\ARM\RV31\Inc -IC:\Keil\ARM\CMSIS\In
+clude -IC:\Keil\ARM\Inc\Freescale\Kinetis --list=.\startup_MK60D10.lst ..\Libra
+ries\startup\DeviceSupport\MDK-ARM\startup_MK60D10.s
 
 
 

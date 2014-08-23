@@ -5,6 +5,8 @@
 #include "math.h" 
 #include "includes.h"
 
+extern int8_t iError_1;
+
 typedef struct PID        //定义PID 的结构体 
 { 
   int SetPoint;

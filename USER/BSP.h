@@ -2,6 +2,8 @@
 #define __BSP_H_
 #include "includes.h"
 
+extern uint32_t number;
+
 void BSP_Init(void);
 void GPIO_Config(void);
 void UART_Config(void);

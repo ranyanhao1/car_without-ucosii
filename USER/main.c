@@ -1,10 +1,9 @@
 #include "includes.h"
 
-extern uint32_t number;
 
 int main()
 {
-	uint8_t Track_Midline_value;
+	uint8_t Track_Midline_value = 0;
   BSP_Init();
 //	DelayMs(1000);
 	Voltage_Show();

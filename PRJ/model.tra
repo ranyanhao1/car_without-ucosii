@@ -38,7 +38,7 @@
 ### ADS-LD Output File: 'model.axf'
 ### ADS-LD Command File: 'model.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'model.lnp', Handle=0x000003EC
+### Creating CmdFile 'model.lnp', Handle=0x00000464
 ### Writing '.lnp' file
 ### ADS-LD Command file 'model.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

@@ -2,8 +2,8 @@
 
 double Servo_Angle(double Location_corner)
 {
-  double error,x,y,servo_corner;
-	uint8_t Install_angle;
+  double error = 0,x = 0,y = 0,servo_corner = 0;
+	uint8_t Install_angle = 0;
 	Install_angle = Install_angle_change();
 	error = Location_corner;
 	y = error * Each_Width; 
@@ -14,7 +14,7 @@ double Servo_Angle(double Location_corner)
 
 float Servo_pwm(double servo_corner)
 {
-	double Servo_pwm_duty,A;
+	double Servo_pwm_duty = 0,A = 0;
 	if(servo_corner != 0)
 	{
 	  Servo_pwm_duty = 750 - servo_corner;

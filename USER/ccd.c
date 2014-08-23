@@ -2,12 +2,13 @@
 
 uint8_t CCD_original_data[132]={0};
 uint8_t CCD_filtering_data[128]={0};
-uint8_t Lost_left = 0;
-uint8_t Lost_right = 0;
+
+struct process_flag Lost_flag;
+
 
 void CCD_gather(void)
 {
-	uint8_t i;
+	uint8_t i = 0;
 	CCD_CLK(0);
 	__nop();
 	CCD_SI(1);  
@@ -68,8 +69,8 @@ void CCD_Restet(void)
 
 void CCD_Filtering(void)      //数据滤波
 {
-	uint8_t i,j,k,MAX,MIN;
-	uint8_t temp[5];
+	uint8_t i =0,j = 0,k = 0,MAX = 0,MIN = 0;
+	uint8_t temp[5] = {0};
 	CCD_original_data[0] = CCD_original_data[2];
 	CCD_original_data[1] = CCD_original_data[3];
 	CCD_original_data[130] = CCD_original_data[128];
@@ -106,7 +107,7 @@ void CCD_Filtering(void)      //数据滤波
 
 void Data_binarization(uint8_t average)
 {
-  uint8_t i;
+  uint8_t i = 0;
 	for(i=0;i<128;i++)
 	{
 	  if(CCD_filtering_data[i] >= average)
@@ -132,7 +133,7 @@ void Data_binarization(uint8_t average)
 
 uint8_t Data_sort(uint8_t data[5])
 {
-  uint8_t i,j,temp;
+  uint8_t i = 0,j = 0,temp = 0;
 	for(j=0;j<5;j++)
 	{
 	  for(i=0;i<5-j;i++)
@@ -151,7 +152,7 @@ uint8_t Data_sort(uint8_t data[5])
 
 uint8_t averaging(void)
 {
-  uint8_t i,MIN=CCD_filtering_data[0],MAX=CCD_filtering_data[0];
+  uint8_t i = 0,MIN=CCD_filtering_data[0],MAX=CCD_filtering_data[0];
 	for(i=1;i<128;i++)
 	{
 	  MAX = MAX_2(MAX,CCD_filtering_data[i]);
@@ -162,8 +163,8 @@ uint8_t averaging(void)
 
 uint8_t TrackMidline(void)
 {
-	  uint8_t i;
-	  uint8_t Left_Side,Right_Side,Track_Midline_value,A,B;
+	  uint8_t i = 0;
+	  uint8_t Left_Side = 0,Right_Side = 0,Track_Midline_value = 0,A = 0,B = 0;
 		for(i=0;i<64;i++)
 	  {
 	   if(CCD_filtering_data[64-i]==0)
@@ -195,13 +196,18 @@ uint8_t TrackMidline(void)
 //		printf("Right_Side = %d\n",B);
 		if(Left_Side <=8 && (Right_Side >=80 && Right_Side <= 88))
 		{
-		  Lost_left = 1;
+		  Lost_flag.Lost_left = 1;
 		}
 		else if (Left_Side >= 40 && Right_Side >=110)
 		{
-		  Lost_right = 1;
+		  Lost_flag.Lost_right = 1;
 		}
     else
+		{
+      Lost_flag.Lost_left  = 0;
+		  Lost_flag.Lost_right = 0;
+    }
+		
 		Track_Midline_value = ((Right_Side + Left_Side)/2);
 		return (Track_Midline_value);
 }

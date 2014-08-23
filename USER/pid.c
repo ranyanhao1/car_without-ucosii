@@ -3,8 +3,7 @@
 static PID sPID;
 static PID*sptr = &sPID;
 int8_t iError_1;               //当前误差
-extern uint8_t Lost_right;
-extern uint8_t Lost_left;
+
 void PID_Init(void)
 {
   sptr->LastError  = 0;         
@@ -24,21 +23,21 @@ void PID_Init(void)
 
 double PID_Calc(uint8_t pid_flag, int NextPoint, uint8_t Track_Midline)
 { 
-  int iError,A,B;                 //当前误差
-	int iIncpid;                //增量值
-	double iIncpid_1;              //增量值
+  int iError = 0,A = 0,B = 0;                 //当前误差
+	int iIncpid = 0;                //增量值
+	double iIncpid_1 = 0;              //增量值
 	if(pid_flag==0)
 	{
-		if((Lost_right == 1) || (Lost_left == 1) )
+		if((Lost_flag.Lost_right == 1) || (Lost_flag.Lost_left == 1) )
 		{
-		 if(Lost_right)
+		 if(Lost_flag.Lost_right)
 		 {
-		   Lost_right = 0;
+		   Lost_flag.Lost_right = 0;
 			 iIncpid = -500;
 		 }
 		 else 
 		 {
-		  Lost_left = 0;
+		  Lost_flag.Lost_left = 0;
 			iIncpid = 751;
 		 }
 		}

@@ -2,9 +2,17 @@
 #define __CCD_H_
 #include "includes.h"
 
+extern uint8_t CCD_filtering_data[128];
+extern struct process_flag Lost_flag;
+
 #define  CCD_SI(data)    GPIO_WriteBit(HW_GPIOB,2,data);
 #define  CCD_CLK(data)   GPIO_WriteBit(HW_GPIOB,4,data);
 
+struct process_flag
+{
+  uint8_t Lost_left  : 1;
+  uint8_t Lost_right : 1;
+};
 
 void CCD_gather(void);
 uint8_t TrackMidline(void);
